@@ -127,7 +127,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void sortUser(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = userDAO.SortByName("");
+        List<User> users = userDAO.SortByName("search");
         request.setAttribute("listUser", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         try {
