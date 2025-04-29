@@ -14,4 +14,6 @@ public interface IUserDAO {
     boolean deleteUser(int id);
 
     boolean updateUser(User user);
+
+    List<User> SearchByName(String name);
 }

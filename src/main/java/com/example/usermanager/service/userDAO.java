@@ -9,10 +9,11 @@ import java.util.List;
 
 public class userDAO implements IUserDAO {
     private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, country) VALUES (?, ?, ?);";
-    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
-    private static final String SELECT_ALL_USERS = "select * from users";
+    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?;";
+    private static final String SELECT_ALL_USERS = "select * from users;";
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
+    private static final String SEARCH_BY_NAME = "select * from users where name = ?;";
 
     public userDAO() {
 
@@ -104,6 +105,24 @@ public class userDAO implements IUserDAO {
         return rowUpdated;
     }
 
+    @Override
+    public List<User> SearchByName(String name) {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = new DBConnection().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_BY_NAME)) {
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String n = rs.getString("name");
+                String e = rs.getString("email");
+                String c = rs.getString("country");
+                users.add(new User(id, n, e, c));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-
+        return users;
+    }
 }

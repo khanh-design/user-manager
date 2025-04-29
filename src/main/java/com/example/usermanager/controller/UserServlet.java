@@ -40,9 +40,24 @@ public class UserServlet extends HttpServlet {
             case "delete":
                 showDeleteForm(request, response);
                 break;
+            case "search":
+                showSearchForm(request, response);
+                break;
             default:
                 showListUser(request, response);
                 break;
+        }
+    }
+
+    private void showSearchForm(HttpServletRequest request, HttpServletResponse response) {
+        String search = request.getParameter("search");
+        List<User> users = userDAO.SearchByName(search);
+        request.setAttribute("listUser", users);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -104,8 +119,23 @@ public class UserServlet extends HttpServlet {
             case "update":
                 editUser(request, response);
                 break;
+            case "search":
+                searchUser(request, response);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void searchUser(HttpServletRequest request, HttpServletResponse response) {
+        String search = request.getParameter("search");
+        List<User> users = userDAO.SearchByName(search);
+        request.setAttribute("listUser", users);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
