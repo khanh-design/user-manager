@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
                 showDeleteForm(request, response);
                 break;
             case "search":
-                showSearchForm(request, response);
+                showSortForm(request, response);
                 break;
             default:
                 showListUser(request, response);
@@ -49,9 +49,8 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void showSearchForm(HttpServletRequest request, HttpServletResponse response) {
-        String search = request.getParameter("search");
-        List<User> users = userDAO.SearchByName(search);
+    private void showSortForm(HttpServletRequest request, HttpServletResponse response) {
+        List<User> users = userDAO.SortByName("");
         request.setAttribute("listUser", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         try {
@@ -120,16 +119,15 @@ public class UserServlet extends HttpServlet {
                 editUser(request, response);
                 break;
             case "search":
-                searchUser(request, response);
+                sortUser(request, response);
                 break;
             default:
                 break;
         }
     }
 
-    private void searchUser(HttpServletRequest request, HttpServletResponse response) {
-        String search = request.getParameter("search");
-        List<User> users = userDAO.SearchByName(search);
+    private void sortUser(HttpServletRequest request, HttpServletResponse response) {
+        List<User> users = userDAO.SortByName("");
         request.setAttribute("listUser", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         try {

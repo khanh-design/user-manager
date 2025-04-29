@@ -15,5 +15,5 @@ public interface IUserDAO {
 
     boolean updateUser(User user);
 
-    List<User> SearchByName(String name);
+    List<User> SortByName(String name);
 }

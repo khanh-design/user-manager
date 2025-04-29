@@ -13,7 +13,7 @@ public class userDAO implements IUserDAO {
     private static final String SELECT_ALL_USERS = "select * from users;";
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
-    private static final String SEARCH_BY_NAME = "select * from users where name = ?;";
+    private static final String SORT_BY_NAME = "select * from users order by name asc;";
 
     public userDAO() {
 
@@ -106,23 +106,22 @@ public class userDAO implements IUserDAO {
     }
 
     @Override
-    public List<User> SearchByName(String name) {
+    public List<User> SortByName(String namePattern) {
         List<User> users = new ArrayList<>();
         try (Connection connection = new DBConnection().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_BY_NAME)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_NAME)) {
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String n = rs.getString("name");
-                String e = rs.getString("email");
-                String c = rs.getString("country");
-                users.add(new User(id, n, e, c));
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String country = rs.getString("country");
+                users.add(new User(id, name, email, country));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return users;
     }
 }

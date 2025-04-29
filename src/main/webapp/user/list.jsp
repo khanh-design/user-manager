@@ -11,25 +11,15 @@
 <head>
     <title>List User</title>
 </head>
-<style>
-  body h3 #search {
-    width: 200px;
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin: 10px;
-  }
-</style>
 <body>
 <center>
   <h1>User Management</h1>
-  <h2>
+  <h2 style="text-decoration: none">
     <a href="/user?action=create">Add New User</a>
   </h2>
-  <h3>
-    <input id="search" type="search" name="search" placeholder="Search by name" value="${search.name}"/>
-  </h3>
+  <h2 style="text-decoration: none">
+    <a href="/user?action=search" class="btn btn-primary">Sort by Name</a>
+  </h2>
 </center>
 <div align="center">
   <table border="1" cellpadding="5">
