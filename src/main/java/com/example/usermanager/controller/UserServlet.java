@@ -44,10 +44,31 @@ public class UserServlet extends HttpServlet {
             case "sort":
                 showSortForm(request, response);
                 break;
+            case "permision":
+                addUserPermision(request, response);
+                break;
+            case "test-without-tran":
+                testWithoutTran(request, response);
+                break;
             default:
                 showListUser(request, response);
                 break;
         }
+    }
+
+    private void addUserPermision(HttpServletRequest request, HttpServletResponse response) {
+        User user = new User("quan", "quan.nguyen@codegym.vn", "vn");
+
+        List<Integer> permision = new ArrayList<>();
+        permision.add(1);
+        permision.add(2);
+        permision.add(3);
+
+        userDAO.addUserTransaction(user, permision);
+    }
+
+    private void testWithoutTran(HttpServletRequest request, HttpServletResponse response) {
+        userDAO.insertUpdateWithoutTransaction();
     }
 
     private void showSortForm(HttpServletRequest request, HttpServletResponse response) {

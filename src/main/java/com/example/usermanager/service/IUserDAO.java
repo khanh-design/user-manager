@@ -22,4 +22,7 @@ public interface IUserDAO {
     void insertUserStore(User user);
 
     void addUserTransaction(User user, List<Integer> permition);
+
+    void insertUpdateWithoutTransaction();
+
 }
