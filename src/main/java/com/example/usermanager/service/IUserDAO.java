@@ -20,4 +20,6 @@ public interface IUserDAO {
     User getUserById(int id);
 
     void insertUserStore(User user);
+
+    void addUserTransaction(User user, List<Integer> permition);
 }

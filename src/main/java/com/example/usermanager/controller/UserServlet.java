@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/user")
@@ -156,13 +157,32 @@ public class UserServlet extends HttpServlet {
 
     }
 
-    private void insertUsers(HttpServletRequest request, HttpServletResponse response) {
+    private void insertUsers(HttpServletRequest request, HttpServletResponse response) throws RuntimeException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String country = request.getParameter("country");
-        User newUser = new User(name, email, country);
-//        userDAO.insertUser(newUser);
-        userDAO.insertUserStore(newUser);
+
+        String add = request.getParameter("add");
+        String edit = request.getParameter("edit");
+        String delete = request.getParameter("delete");
+        String view = request.getParameter("view");
+        List<Integer> permitions = new ArrayList<>();
+
+        if (add != null) {
+            permitions.add(1);
+        }
+        if (edit != null) {
+            permitions.add(2);
+        }
+        if (delete != null) {
+            permitions.add(3);
+        }
+        if (view != null) {
+            permitions.add(4);
+        }
+
+        User user = new User(name, email, country);
+        userDAO.addUserTransaction(user, permitions);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         try {
             dispatcher.forward(request, response);
