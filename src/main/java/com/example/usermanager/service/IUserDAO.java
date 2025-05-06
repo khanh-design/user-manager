@@ -15,5 +15,9 @@ public interface IUserDAO {
 
     boolean updateUser(User user);
 
-    List<User> SortByName(String name);
+    List<User> SortByName();
+
+    User getUserById(int id);
+
+    void insertUserStore(User user);
 }

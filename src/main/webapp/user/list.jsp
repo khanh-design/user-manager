@@ -17,9 +17,9 @@
   <h2 style="text-decoration: none">
     <a href="/user?action=create">Add New User</a>
   </h2>
-  <form method="post">
-    <input type="hidden" name="search" value="listUser">
-    <button type="submit" class="btn btn-primary mb-3">Sort by Name</button>
+  <form method="post" action="/user">
+    <input type="hidden" name="action" value="sort">
+    <button type="submit" class="btn">Sort by Name</button>
   </form>
 </center>
 <div align="center">

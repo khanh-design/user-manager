@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
             case "delete":
                 showDeleteForm(request, response);
                 break;
-            case "search":
+            case "sort":
                 showSortForm(request, response);
                 break;
             default:
@@ -50,7 +50,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showSortForm(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = userDAO.SortByName("");
+        List<User> users = userDAO.SortByName();
         request.setAttribute("listUser", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         try {
@@ -75,7 +75,8 @@ public class UserServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        User existingUser = userDAO.selectUser(id);
+//        User existingUser = userDAO.selectUser(id);
+        User existingUser = userDAO.getUserById(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         request.setAttribute("user", existingUser);
         try {
@@ -118,7 +119,7 @@ public class UserServlet extends HttpServlet {
             case "update":
                 editUser(request, response);
                 break;
-            case "search":
+            case "sort":
                 sortUser(request, response);
                 break;
             default:
@@ -127,7 +128,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void sortUser(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = userDAO.SortByName("search");
+        List<User> users = userDAO.SortByName();
         request.setAttribute("listUser", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         try {
@@ -136,6 +137,7 @@ public class UserServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 
     private void editUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -159,7 +161,8 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String country = request.getParameter("country");
         User newUser = new User(name, email, country);
-        userDAO.insertUser(newUser);
+//        userDAO.insertUser(newUser);
+        userDAO.insertUserStore(newUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         try {
             dispatcher.forward(request, response);
